@@ -1,0 +1,27 @@
+/* ===== Cabeçalho com logo + botões ===== */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px;background:linear-gradient(#000c,#0000);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.topbar .logo img{display:block;height:72px;width:auto}
+.topbar nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.topbar nav a{color:#fff;text-decoration:none;font:500 12px/1 'Geist',system-ui,sans-serif;padding:9px 12px;border:1px solid #ffffff40;border-radius:999px;background:#ffffff0d;transition:background .2s,border-color .2s}
+.topbar nav a:hover,.topbar nav a:active{background:#ffffff26;border-color:#fff9}
+.hero .brand{display:none}
+@media(max-width:560px){.topbar .logo img{height:56px}.topbar nav a{font-size:11px;padding:8px 9px}}
+
+/* ===== Seção de contato ===== */
+#contato-form{padding:96px 20px;max-width:760px;margin:0 auto}
+#contato-form h2{margin:8px 0 14px}
+#contato-form .lead{opacity:.8;line-height:1.6;margin:0 0 32px}
+.cform{display:grid;gap:16px}
+.cform label{display:grid;gap:6px;font:500 13px 'Geist',system-ui,sans-serif;color:#ffffffb3}
+.cform input,.cform select,.cform textarea{width:100%;box-sizing:border-box;font:400 16px 'Geist',system-ui,sans-serif;color:#fff;background:#ffffff0d;border:1px solid #ffffff2e;border-radius:12px;padding:14px;outline:none;transition:border-color .2s,background .2s}
+.cform select option{color:#000}
+.cform textarea{min-height:140px;resize:vertical}
+.cform input:focus,.cform select:focus,.cform textarea:focus{border-color:#fff;background:#ffffff14}
+.cform button{font:600 15px 'Geist',system-ui,sans-serif;color:#000;background:#fff;border:0;border-radius:999px;padding:16px 28px;cursor:pointer;justify-self:start}
+.cform button:active{transform:scale(.98)}
+.cform .ok{display:none;color:#9be7a8;font:500 14px 'Geist',sans-serif}
+
+/* ===== Crédito no rodapé ===== */
+.credito{margin-top:10px;font:400 12px 'Geist',system-ui,sans-serif;opacity:.65}
+.credito a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.credito a:hover{opacity:1}
