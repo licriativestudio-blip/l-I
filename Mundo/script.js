@@ -1,5 +1,6 @@
 import * as THREE from "three";
-import { FOTOS } from "./esfera.js?v=2";
+import { FOTOS } from "./esfera.js?v=3";
+import { LEGENDAS } from "./legendas.js?v=3";
 
 /* ============ CONFIGURAÇÃO ============ */
 const TOTAL_FOTOS = FOTOS.length;   // fotos da esfera embutidas em esfera.js
@@ -45,7 +46,9 @@ const N = 20;            // quantidade de planos na esfera
   var lb = document.getElementById('lb'), img = document.getElementById('lbImg'), thumbs = document.getElementById('thumbs');
   var titleEl = document.getElementById('lbTitle'), countEl = document.getElementById('lbCount');
   var emptyEl = document.getElementById('lbEmpty'), folderEl = document.getElementById('lbFolder');
-  var cache = {}, list = [], idx = 0;
+  var cache = {}, list = [], idx = 0, curCat = '';
+  var capEl = document.getElementById('lbCap');
+  function capOf(i) { var m = (list[i] || '').match(/fotos\/(.+)\/(\d+)\.jpg/); return m ? (LEGENDAS[m[1] + '/' + m[2]] || '') : ''; }
 
   // descobre quantas fotos existem: 1.jpg, 2.jpg, ... até faltar uma
   function probe(cat) {
@@ -66,7 +69,9 @@ const N = 20;            // quantidade de planos na esfera
     if (!list.length) return;
     idx = (i + list.length) % list.length;
     img.classList.add('out');
-    setTimeout(function () { img.src = list[idx]; img.classList.remove('out'); }, 180);
+    var cap = capOf(idx);
+    setTimeout(function () { img.src = list[idx]; img.alt = cap; img.classList.remove('out'); }, 180);
+    if (capEl) capEl.textContent = cap;
     countEl.textContent = (idx + 1) + ' / ' + list.length;
     [].forEach.call(thumbs.children, function (t, k) { t.classList.toggle('on', k === idx); });
     var on = thumbs.children[idx];
@@ -74,6 +79,7 @@ const N = 20;            // quantidade de planos na esfera
   }
 
   function open(cat, title) {
+    curCat = cat; if (capEl) capEl.textContent = '';
     titleEl.innerHTML = title; countEl.textContent = '';
     thumbs.innerHTML = ''; img.removeAttribute('src');
     lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); document.body.classList.add('noscroll');
@@ -83,7 +89,7 @@ const N = 20;            // quantidade de planos na esfera
       if (!l.length) { emptyEl.style.display = 'block'; return; }
       img.style.display = '';
       l.forEach(function (src, k) {
-        var t = new Image(); t.src = src; t.alt = '';
+        var t = new Image(); t.src = src; t.alt = capOf(k);
         t.onclick = function () { show(k); };
         thumbs.appendChild(t);
       });
@@ -116,10 +122,6 @@ const N = 20;            // quantidade de planos na esfera
   });
 })();
 
-// Legendas da galeria. Chave = "pasta/número da foto" (ex.: cidades/1 = fotos/cidades/1.jpg)
-// Para editar: troque o texto entre aspas. Use sempre aspas duplas e termine a linha com vírgula.
-// Foto sem legenda aparece normalmente.
-export const LEGENDAS = {
 /* ============ ESFERA 3D ============ */
 const el = document.getElementById("sphere");
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
